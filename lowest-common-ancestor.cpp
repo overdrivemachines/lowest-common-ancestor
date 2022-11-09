@@ -5,6 +5,8 @@
 
 using namespace std;
 
+const int null = -1;
+
 struct TreeNode {
   int val;
   TreeNode* left;
@@ -18,12 +20,12 @@ struct TreeNodeCollection {
   TreeNode* q;
 };
 
-TreeNodeCollection createTree(vector<int> input);
+TreeNodeCollection createTree(vector<int> input, int p, int q);
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q);
 
 int main(int argc, char const* argv[]) {
-  vector<int> input1 = {6, 2, 8, 0, 4, 7, 9, NULL, NULL, 3, 5};
-  vector<int> input2 = {6, 2, 8, 0, 4, 7, 9, NULL, NULL, 3, 5};
+  vector<int> input1 = {6, 2, 8, 0, 4, 7, 9, null, null, 3, 5};
+  vector<int> input2 = {6, 2, 8, 0, 4, 7, 9, null, null, 3, 5};
   vector<int> input3 = {2, 1};
   vector<int> input4 = {1, 2, 3, 4, 5};
 
@@ -33,14 +35,41 @@ int main(int argc, char const* argv[]) {
   int p4 = 5, q4 = 3;
 
   TreeNodeCollection tc1 = createTree(input1, p1, q1);
-  TreeNodeCollection tc2 = createTree(input2, p2, q2);
-  TreeNodeCollection tc3 = createTree(input3, p3, q3);
-  TreeNodeCollection tc4 = createTree(input4, p4, q4);
+  // TreeNodeCollection tc2 = createTree(input2, p2, q2);
+  // TreeNodeCollection tc3 = createTree(input3, p3, q3);
+  // TreeNodeCollection tc4 = createTree(input4, p4, q4);
+
+  // TreeNode* lca1 = lowestCommonAncestor(tc1.root, tc1.p, tc1.q);
 
   return 0;
 }
 
+// Returns pointer to lowest common ancestor between two nodes p and q
 TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+  TreeNode* node;           // used to traverse through the tree
+  TreeNode* lca = nullptr;  // lowest common ancestor (lca)
+  stack<TreeNode*> nodeStack;
+
+  nodeStack.push(root);
+  while (!nodeStack.empty()) {
+    node = nodeStack.top();
+    cout << "Node: " << node->val << endl;
+    nodeStack.pop();
+
+    if (node->left != nullptr) {
+      node = node->left;
+      nodeStack.push(node);
+      cout << "\tLeft: " << node->val << endl;
+    }
+
+    if (node->right != nullptr) {
+      node = node->right;
+      nodeStack.push(node);
+      cout << "\tRight: " << node->val << endl;
+    }
+  }
+
+  return lca;
 }
 
 // Create a tree given a vector of input elements,
@@ -72,8 +101,8 @@ TreeNodeCollection createTree(vector<int> input, int p, int q) {
   bool isLeftFilled = false;
 
   for (int i = 1; i < input.size(); i++) {
-    // cout << input[i] << ": ";
-    if (input[i] != NULL) {
+    cout << input[i] << ": ";
+    if (input[i] != null) {
       node = new TreeNode(input[i]);
       // if node value is same as p
       if (input[i] == p)
@@ -85,13 +114,13 @@ TreeNodeCollection createTree(vector<int> input, int p, int q) {
       nodes.push(node);
       if (!isLeftFilled) {
         parent->left = node;
-        // cout << "adding " << node->val << " to left of " << parent->val << endl;
+        cout << "adding " << node->val << " to left of " << parent->val << endl;
         isLeftFilled = true;
       } else {
         parent->right = node;
-        // cout << "adding " << node->val << " to right of " << parent->val << endl;
+        cout << "adding " << node->val << " to right of " << parent->val << endl;
         parent = nodes.front();
-        // cout << "new parent: " << parent->val << endl;
+        cout << "new parent: " << parent->val << endl;
         nodes.pop();
         isLeftFilled = false;
       }
@@ -100,12 +129,12 @@ TreeNodeCollection createTree(vector<int> input, int p, int q) {
       if (!isLeftFilled) {
         parent->left = nullptr;
         isLeftFilled = true;
-        // cout << "adding null to left of " << parent->val << endl;
+        cout << "adding null to left of " << parent->val << endl;
       } else {
         parent->right = nullptr;
-        // cout << "adding null to right of " << parent->val << endl;
+        cout << "adding null to right of " << parent->val << endl;
         parent = nodes.front();
-        // cout << "new parent: " << parent->val << endl;
+        cout << "new parent: " << parent->val << endl;
         nodes.pop();
         isLeftFilled = false;
       }
