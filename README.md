@@ -7,6 +7,7 @@ According to the definition of LCA on Wikipedia: "The lowest common ancestor is 
 ### Example 1:
 
 ![Example 1](example1.png)
+
 Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
 Output: 6
 Explanation: The LCA of nodes 2 and 8 is 6.
@@ -14,6 +15,7 @@ Explanation: The LCA of nodes 2 and 8 is 6.
 ### Example 2:
 
 ![Example 1](example2.png)
+
 Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4
 Output: 2
 Explanation: The LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.
@@ -22,6 +24,11 @@ Explanation: The LCA of nodes 2 and 4 is 2, since a node can be a descendant of 
 
 Input: root = [2,1], p = 2, q = 1
 Output: 2
+
+### Example 4:
+
+Input: root = [1,2,3,4,5], p = 5, q = 3
+Output:
 
 ### Constraints
 
