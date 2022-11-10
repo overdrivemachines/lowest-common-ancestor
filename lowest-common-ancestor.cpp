@@ -36,11 +36,12 @@ int main(int argc, char const* argv[]) {
   int p4 = 5, q4 = 3;
 
   TreeNodeCollection tc1 = createTree(input1, p1, q1);
-  // TreeNodeCollection tc2 = createTree(input2, p2, q2);
+  TreeNodeCollection tc2 = createTree(input2, p2, q2);
   // TreeNodeCollection tc3 = createTree(input3, p3, q3);
   // TreeNodeCollection tc4 = createTree(input4, p4, q4);
 
-  TreeNode* lca1 = lowestCommonAncestor(tc1.root, tc1.p, tc1.q);
+  // TreeNode* lca1 = lowestCommonAncestor(tc1.root, tc1.p, tc1.q);
+  TreeNode* lca2 = lowestCommonAncestor(tc2.root, tc2.p, tc2.q);
 
   return 0;
 }
@@ -61,70 +62,66 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
   nodeStack.push(root);
   while (!nodeStack.empty()) {
     node = nodeStack.top();
-    cout << "Node: " << node->val << endl;
+    // cout << "Node: " << node->val << endl;
     nodeStack.pop();
 
     if (node->right != nullptr) {
       nodeStack.push(node->right);
       nodeRightVal = node->right->val;
-      cout << "\tRight: " << nodeRightVal << endl;
+      // cout << "\tRight: " << nodeRightVal << endl;
       parents[node->right] = node;
 
       if (node->right == p) {
-        cout << "***found p*** : " << nodeRightVal << endl;
+        // cout << "***found p*** : " << nodeRightVal << endl;
       }
       if (node->right == q) {
-        cout << "***found q*** : " << nodeRightVal << endl;
+        // cout << "***found q*** : " << nodeRightVal << endl;
       }
     }
 
     if (node->left != nullptr) {
       nodeStack.push(node->left);
       nodeLeftVal = node->left->val;
-      cout << "\tLeft: " << nodeLeftVal << endl;
+      // cout << "\tLeft: " << nodeLeftVal << endl;
       parents[node->left] = node;
 
       if (node->left == p) {
-        cout << "***found p*** : " << nodeLeftVal << endl;
+        // cout << "***found p*** : " << nodeLeftVal << endl;
       }
       if (node->left == q) {
-        cout << "***found q*** : " << nodeLeftVal << endl;
+        // cout << "***found q*** : " << nodeLeftVal << endl;
       }
     }
   }
 
   // get all parents of p
   node = p;
-  cout << "Parents of p: ";
+  // cout << "Parents of p: ";
   while (node != nullptr) {
-    cout << node->val << "->";
+    // cout << node->val << "->";
     pParents.push_back(node);
     node = parents[node];
   }
-  cout << endl;
+  // cout << endl;
 
   // get all parents of q
   node = q;
-  cout << "Parents of q: ";
+  // cout << "Parents of q: ";
   while (node != nullptr) {
-    cout << node->val << "->";
+    // cout << node->val << "->";
     qParents.push_back(node);
     node = parents[node];
   }
-  cout << endl;
 
-  cout << "hello world";
+  cout << endl;
 
   // Find common parent for p and q
 
-  for (int i = 0; i < pParents.size(); p++) {
-  }
-
   for (TreeNode* pParent : pParents) {
-    cout << "Searching for " << pParent->val << endl;
+    // cout << "Searching for " << pParent->val << endl;
     for (TreeNode* qParent : qParents) {
       if (pParent == qParent) {
-        cout << "Found Common Ancestor: " << pParent->val << endl;
+        // cout << "Found Common Ancestor: " << pParent->val << endl;
         return pParent;
       }
     }
